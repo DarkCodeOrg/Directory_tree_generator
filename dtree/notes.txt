@@ -1,0 +1,33 @@
+dirtree.py :  provides an entry point script for you to run the qapplication
+
+dtree.py : provides the main functionalities for the application
+
+__init__.py : this enables /dtree as a python package
+
+cli.py : provides the command line interface for the app 
+
+
+
+						::NOTES::
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+				  steps of the program : 
+
+1) get the path to a  directory (given by user) 
+			|
+			|__> using argparse module from standard library
+
+2) open the directory
+			|
+			|__> using pathlib 
+
+3) traverse it and get the files and folders in it
+			|
+			|__> using pathlib 
+			|__> use a python list to store the list of entries in the directory structure
+
+4) if the directory contains sub_directories the repeat the process from step 2
+
+
+
