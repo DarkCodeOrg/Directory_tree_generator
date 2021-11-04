@@ -1,5 +1,3 @@
-"""This module provides the Dtree main module"""
-
 import os
 import pathlib
 
@@ -9,7 +7,6 @@ TEE = "├──"
 PIPE_PREFIX = "│   "
 SPACE_PREFIX = "    "
 
-
 class DirectoryTree:
     def __init__(self, root_dir):
         self._generator = _TreeGenerator(root_dir)
@@ -18,8 +15,9 @@ class DirectoryTree:
         tree = self._generator.build_tree()
         for entry in tree:
             print(entry)
-
-
+        
+        a, b = self._generator._file_count(self._generator._root_dir)
+        print("The No of files and Directories is: ",a,b)
 
 class _TreeGenerator:
     def __init__(self,root_dir):
@@ -30,6 +28,10 @@ class _TreeGenerator:
         self._tree_head()
         self._tree_body(self._root_dir)
         return self._tree
+    
+    def summary(self):
+        file, directory = self._file_count(self._root_dir)
+        return(file,directory)
 
     def _tree_head(self):
         self._tree.append(f"{self._root_dir}{os.sep}")
@@ -45,7 +47,7 @@ class _TreeGenerator:
                 self._add_directory(
                     entry, index, entries_count, prefix, connector
                 )
-            else: 
+            else:
                 self._add_file(entry, prefix, connector)
 
 
@@ -67,5 +69,22 @@ class _TreeGenerator:
 
     def _add_file(self, file, prefix, connector):
         self._tree.append(f"{prefix}{connector}{file.name}")
+    
+
+    def _file_count(self, directory, prefix = ""):
+        DirCount = 0
+        FileCount = 0
+
+        entries = directory.iterdir()
+        ## print(entries)  ## debugg
+        entries = sorted(entries, key=lambda entry: entry.is_file())
+        ##print(entries)  #3 debug
+        for index, entry in enumerate(entries):
+            if entry.is_dir():
+                DirCount += 1
+            else:
+                FileCount += 1
+        
+        return(FileCount,DirCount)
 
 

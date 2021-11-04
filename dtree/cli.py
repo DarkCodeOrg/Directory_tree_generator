@@ -4,6 +4,7 @@ import sys
 
 from . import __version__
 from .dtree import DirectoryTree
+#from .dtree import DirCount, FileCount
 
 def main():
     args = parse_cmd_line_arguments()
@@ -14,8 +15,6 @@ def main():
 
     tree = DirectoryTree(root_dir)
     tree.generate()
-
-
 
 def parse_cmd_line_arguments():
     parser = argparse.ArgumentParser(
