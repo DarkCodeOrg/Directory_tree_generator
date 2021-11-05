@@ -41,6 +41,7 @@ class _TreeGenerator:
         entries = directory.iterdir()
         entries = sorted(entries, key=lambda entry: entry.is_file())
         entries_count = len(entries)
+
         for index, entry in enumerate(entries):
             connector = ELBOW if index == entries_count - 1 else TEE
             if entry.is_dir():
@@ -55,7 +56,7 @@ class _TreeGenerator:
     def _add_directory(
         self, directory, index, entries_count, prefix, connector
     ):
-        self._tree.append(f"{prefix}{connector}{directory.name}{os.sep}")
+        self._tree.append(f"{prefix}{connector}" f"\033[1;34;40m {directory.name}{os.sep}")
         if index != entries_count - 1:
             prefix += PIPE_PREFIX
         else:
@@ -68,7 +69,7 @@ class _TreeGenerator:
         self._tree.append(prefix.rstrip())
 
     def _add_file(self, file, prefix, connector):
-        self._tree.append(f"{prefix}{connector}{file.name}")
+        self._tree.append(f"{prefix}{connector}" f"\033[1;32;40m {file.name}")
     
 
     def _file_count(self, directory, prefix = ""):
@@ -76,11 +77,11 @@ class _TreeGenerator:
         FileCount = 0
 
         entries = directory.iterdir()
-        ## print(entries)  ## debugg
         entries = sorted(entries, key=lambda entry: entry.is_file())
-        ##print(entries)  #3 debug
+
         for index, entry in enumerate(entries):
             if entry.is_dir():
+                
                 DirCount += 1
             else:
                 FileCount += 1
